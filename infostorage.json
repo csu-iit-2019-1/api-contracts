@@ -1,0 +1,211 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample Infostorage server.  You can find \nout more about Swagger at \n[http://swagger.io](http://swagger.io) or on \n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n",
+    "version": "1.0.0",
+    "title": "Swagger Infostorage",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/VadimAspirin/infostorage/1.0.0",
+  "tags": [
+    {
+      "name": "infostorage",
+      "description": "Everything about your Infostorage",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://swagger.io"
+      }
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/infostorage/enter-new-data/{returnUrl}": {
+      "get": {
+        "tags": [
+          "infostorage"
+        ],
+        "summary": "Get personal data Form",
+        "operationId": "getPersonalDataForm",
+        "parameters": [
+          {
+            "name": "returnUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "personal data form",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Invalid Token"
+          },
+          "404": {
+            "description": "Token not found"
+          }
+        }
+      }
+    },
+    "/infostorage/enter-new-data/": {
+      "post": {
+        "tags": [
+          "infostorage"
+        ],
+        "summary": "Add info by user data",
+        "operationId": "addInfoByUserData",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/xml",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/userData"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/site/{siteId}": {
+      "get": {
+        "tags": [
+          "site"
+        ],
+        "summary": "Redirect by return url with site id",
+        "operationId": "redirectByReturnUrlWithSiteId",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Open source site",
+            "schema": {
+              "type": "file"
+            }
+          },
+          "400": {
+            "description": "Invalid returnUrl"
+          },
+          "404": {
+            "description": "ReturnUrl not found"
+          }
+        }
+      }
+    },
+    "/infostorage/{siteId}": {
+      "get": {
+        "tags": [
+          "infostorage"
+        ],
+        "summary": "Get info by SiteId",
+        "operationId": "getInfoBySiteId",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/userData"
+            }
+          },
+          "400": {
+            "description": "Invalid SiteId"
+          },
+          "404": {
+            "description": "SiteId not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "userData": {
+      "required": [
+        "firstName",
+        "lastName",
+        "returnUrl",
+        "siteId"
+      ],
+      "properties": {
+        "siteId": {
+          "type": "integer"
+        },
+        "returnUrl": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "string"
+        },
+        "pasport": {
+          "type": "string"
+        },
+        "card": {
+          "type": "string"
+        },
+        "other": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
