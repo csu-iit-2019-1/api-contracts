@@ -1,0 +1,67 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a cashbox",
+    "version" : "1.0.0",
+    "title" : "Cashbox",
+    "contact" : {
+      "email" : "you@your-company.com"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "cashbox",
+    "description" : "Payment processing"
+  } ],
+  "paths" : {
+    "/payment/" : {
+      "post" : {
+        "tags" : [ "cashbox" ],
+        "summary" : "Make payment",
+        "operationId" : "makePayment",
+        "description" : "",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/PaymentItem"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "PaymentItem" : {
+      "type" : "object",
+      "required" : [ "personId", "paymentAmount" ],
+      "properties" : {
+        "personId" : {
+          "type" : "string"
+        },
+        "paymentAmount" : {
+          "type" : "integer"
+        },
+        "returnURL" : {
+          "type" : "string"
+        }
+      }
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/Deadcreep/Cashbox/1.0.0",
+  "schemes" : [ "https" ]
+}
