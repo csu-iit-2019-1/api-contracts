@@ -1,0 +1,265 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a sample Booking service.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "version" : "1.1.0",
+    "title" : "Booking",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "apiteam@swagger.io"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "app.swaggerhub.com",
+  "basePath" : "/apis/CSU/Booking/1.1.0",
+  "tags" : [ {
+    "name" : "booking",
+    "description" : "Booking operations"
+  }, {
+    "name" : "buying",
+    "description" : "Buying operations"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/booking/route" : {
+      "post" : {
+        "tags" : [ "booking" ],
+        "summary" : "Booking Route",
+        "operationId" : "bookingRoute",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "Route object",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Route"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation"
+          },
+          "400" : {
+            "description" : "Invalid input"
+          }
+        }
+      }
+    },
+    "/buying/{userId}" : {
+      "post" : {
+        "tags" : [ "buying" ],
+        "summary" : "Pay reservation",
+        "operationId" : "pay",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "maximum" : 10,
+          "minimum" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Invalid userId supplied"
+          },
+          "404" : {
+            "description" : "User not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Route" : {
+      "type" : "object",
+      "required" : [ "countOfPersonsAdults", "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "events" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Event"
+          }
+        },
+        "transports" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Flight"
+          }
+        },
+        "hotels" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Hotel"
+          }
+        },
+        "countOfPersonsAdults" : {
+          "type" : "integer"
+        },
+        "countOfPersonsChildren" : {
+          "type" : "integer"
+        }
+      },
+      "xml" : {
+        "name" : "Route"
+      }
+    },
+    "Hotel" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "hotelId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "hotelname"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "apartaments" : {
+          "type" : "array",
+          "items" : {
+            "type" : "integer"
+          }
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "desctiption" : {
+          "type" : "string"
+        },
+        "raiting" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "photoUrls" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        },
+        "reviews" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      }
+    },
+    "Event" : {
+      "type" : "object",
+      "required" : [ "city", "end_date", "name", "start_date" ],
+      "properties" : {
+        "eventId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "eventname"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "desctiption" : {
+          "type" : "string"
+        },
+        "start_date" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "end_date" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "free_space" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "Flight" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "transportId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "flightinfo"
+        },
+        "sits" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Sit"
+          }
+        },
+        "startPoint" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "endPoint" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "departureTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "arriveTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "Sit" : {
+      "type" : "object",
+      "required" : [ "className", "price", "sitNumber" ],
+      "properties" : {
+        "className" : {
+          "type" : "string",
+          "enum" : [ "coach", "comfort", "business", "first" ]
+        },
+        "sitNumber" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "state" : {
+          "type" : "string",
+          "default" : "available",
+          "enum" : [ "available", "not available" ]
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    }
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Swagger",
+    "url" : "http://swagger.io"
+  }
+}
