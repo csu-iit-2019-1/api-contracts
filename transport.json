@@ -1,0 +1,479 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "Swagger Transport"
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/CSU7/Transport/1.0.0",
+  "tags" : [ {
+    "name" : "transport"
+  } ],
+  "schemes" : [ "https", "http" ],
+  "paths" : {
+    "/transport/{transportId}" : {
+      "get" : {
+        "tags" : [ "transport" ],
+        "summary" : "Find transport by ID",
+        "description" : "Returns a single transport",
+        "operationId" : "getTransportById",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "transportId",
+          "in" : "path",
+          "description" : "ID of transport",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "sucsessful",
+            "schema" : {
+              "$ref" : "#/definitions/Flight"
+            }
+          },
+          "400" : {
+            "description" : "Invalid input"
+          },
+          "404" : {
+            "description" : "Transport not found"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "admin" ],
+        "summary" : "Updates a transport by ID with form data",
+        "operationId" : "updateTransportWithForm",
+        "consumes" : [ "application/x-www-form-urlencoded" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "transportId",
+          "in" : "path",
+          "description" : "ID of transport that needs to be updated",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "name",
+          "in" : "formData",
+          "required" : false,
+          "type" : "string"
+        }, {
+          "name" : "startPoint",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "endPoint",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "departureTime",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "arriveTime",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "coachSitsAmount",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "comforSitstAmount",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "businessSitsAmount",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "firstSitsAmount",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "coachSitsPrice",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "comforSitstPrice",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "businessSitsPrice",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "firstSitsPrice",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "405" : {
+            "description" : "Invalid input"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "admin" ],
+        "summary" : "Deletes a transport",
+        "operationId" : "deleteTransport",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "transportId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Transport not found"
+          }
+        }
+      }
+    },
+    "/transport/get_list" : {
+      "post" : {
+        "tags" : [ "transport" ],
+        "summary" : "Finds transport by parameters",
+        "operationId" : "findTransportByParameters",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "points",
+          "in" : "formData",
+          "required" : true,
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "startPoint",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startDate",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "endDate",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "class",
+          "in" : "formData",
+          "required" : true,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "default" : "coach",
+            "enum" : [ "coach", "comfort", "business", "first" ]
+          },
+          "collectionFormat" : "multi"
+        }, {
+          "name" : "countOfAdults",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "countOfKids",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Flight"
+              }
+            }
+          },
+          "400" : {
+            "description" : "Invalid status value"
+          }
+        }
+      }
+    },
+    "/transport/pricelist" : {
+      "post" : {
+        "tags" : [ "transport" ],
+        "operationId" : "gettingPriceByDays",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "startDate",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "endDate",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "startPoint",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "endPoint",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "success",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/Prices"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transport/booking/{transportId}" : {
+      "post" : {
+        "tags" : [ "booking" ],
+        "operationId" : "bookingTransport",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "transportId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "personId",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer"
+        }, {
+          "name" : "countOfAdults",
+          "in" : "formData",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "countOfKids",
+          "in" : "formData",
+          "required" : false,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Booking"
+            }
+          }
+        }
+      }
+    },
+    "/transport/buyout/{bookingId}" : {
+      "post" : {
+        "tags" : [ "buyout" ],
+        "operationId" : "buyoutBooking",
+        "consumes" : [ "mulipart/form-data" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "bookingId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Buyout"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "Flight" : {
+      "type" : "object",
+      "required" : [ "name" ],
+      "properties" : {
+        "transportId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "flightinfo"
+        },
+        "sits" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Sit"
+          }
+        },
+        "startPoint" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "endPoint" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "departureTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "arriveTime" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "Sit" : {
+      "type" : "object",
+      "required" : [ "className", "price", "sitNumber" ],
+      "properties" : {
+        "className" : {
+          "type" : "string",
+          "enum" : [ "coach", "comfort", "business", "first" ]
+        },
+        "sitNumber" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "state" : {
+          "type" : "string",
+          "default" : "available",
+          "enum" : [ "available", "not available" ]
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "Prices" : {
+      "type" : "object",
+      "properties" : {
+        "transportId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "date" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "coachPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "comfortPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "businessPrice" : {
+          "type" : "number",
+          "format" : "double"
+        },
+        "firstClassPrice" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "Booking" : {
+      "type" : "object",
+      "required" : [ "countOfAdults", "personId", "transportId" ],
+      "properties" : {
+        "bookingId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "transportId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "personId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "countOfAdults" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "countOfKids" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
+        }
+      }
+    },
+    "Buyout" : {
+      "type" : "object",
+      "properties" : {
+        "bookingId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "success"
+        }
+      }
+    }
+  }
+}
