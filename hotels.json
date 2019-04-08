@@ -1,6 +1,7 @@
 {
   "swagger" : "2.0",
   "info" : {
+    "description" : "This is a sample Hotelstore server.  You can find \nout more about Swagger at \n[http://swagger.io](http://swagger.io) or on \n[irc.freenode.net, #swagger](http://swagger.io/irc/).\n",
     "version" : "1.0.0",
     "title" : "Swagger Hotelstore",
     "termsOfService" : "http://swagger.io/terms/",
@@ -24,7 +25,7 @@
   } ],
   "schemes" : [ "https", "http" ],
   "paths" : {
-    "/hotels/{cityId}" : {
+    "/hotels/cities/{cityId}" : {
       "get" : {
         "tags" : [ "hotel" ],
         "summary" : "Get all hotels",
@@ -52,7 +53,46 @@
         }
       }
     },
-    "/hotel/{hotelId}" : {
+    "/hotels/{date}/{cityId}/{stars}" : {
+      "get" : {
+        "tags" : [ "hotel" ],
+        "summary" : "Get all hotels",
+        "operationId" : "getAllHotelsByDateCityStars",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "date",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "cityId",
+          "in" : "path",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "stars",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/Hotels"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Hotel not found"
+          }
+        }
+      }
+    },
+    "/hotels/{hotelId}" : {
       "get" : {
         "tags" : [ "hotel" ],
         "summary" : "Find hotel by ID",
@@ -82,7 +122,7 @@
           }
         }
       },
-      "post" : {
+      "put" : {
         "tags" : [ "admin" ],
         "operationId" : "updateHotelWithForm",
         "consumes" : [ "application/x-www-form-urlencoded" ],
@@ -182,7 +222,7 @@
         }
       }
     },
-    "/averagecost/{day}/{stars}/{cityId}" : {
+    "/hotels/averagemincost/{day}/{stars}/{cityId}" : {
       "get" : {
         "tags" : [ "avgmincosts" ],
         "summary" : "Get avg and min cost of hottels by day/stars/area",
@@ -218,43 +258,6 @@
           },
           "404" : {
             "description" : "Hotel not found"
-          }
-        }
-      }
-    },
-    "/hotel/{hotelId}/uploadImage" : {
-      "post" : {
-        "tags" : [ "admin" ],
-        "summary" : "uploads an image",
-        "operationId" : "uploadFile",
-        "consumes" : [ "multipart/form-data" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "hotelId",
-          "in" : "path",
-          "description" : "ID of hotel to update",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "additionalMetadata",
-          "in" : "formData",
-          "description" : "Additional data to pass to server",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "file",
-          "in" : "formData",
-          "description" : "file to upload",
-          "required" : false,
-          "type" : "file"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/ApiResponse"
-            }
           }
         }
       }
@@ -304,8 +307,8 @@
         }
       }
     },
-    "/hotel/buyout" : {
-      "post" : {
+    "/hotels/buyout" : {
+      "put" : {
         "tags" : [ "buyout" ],
         "operationId" : "buyoutBooking",
         "consumes" : [ "multipart/form-data" ],
@@ -376,45 +379,10 @@
         }
       }
     },
-    "Apartament" : {
-      "type" : "object",
-      "required" : [ "numOfRooms" ],
-      "properties" : {
-        "apartamentId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "numOfRooms" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "numberOfPersons" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      }
-    },
     "Booking" : {
       "type" : "object",
-      "required" : [ "countOfPersons", "hotelId", "personId", "stayTime" ],
       "properties" : {
         "bookingId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "personId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "hotelId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "stayTime" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "countOfPersons" : {
           "type" : "integer",
           "format" : "int64"
         },
