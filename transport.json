@@ -30,129 +30,11 @@
           "200" : {
             "description" : "sucsessful",
             "schema" : {
-              "$ref" : "#/definitions/Flight"
+              "$ref" : "#/definitions/Route"
             }
           },
           "400" : {
             "description" : "Invalid input"
-          },
-          "404" : {
-            "description" : "Transport not found"
-          }
-        }
-      },
-      "post" : {
-        "tags" : [ "admin" ],
-        "summary" : "Updates a transport by ID with form data",
-        "operationId" : "updateTransportWithForm",
-        "consumes" : [ "application/x-www-form-urlencoded" ],
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "transportId",
-          "in" : "path",
-          "description" : "ID of transport that needs to be updated",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "name",
-          "in" : "formData",
-          "required" : false,
-          "type" : "string"
-        }, {
-          "name" : "startPoint",
-          "in" : "formData",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "endPoint",
-          "in" : "formData",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "departureTime",
-          "in" : "formData",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "arriveTime",
-          "in" : "formData",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "coachSitsAmount",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "comforSitstAmount",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "businessSitsAmount",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "firstSitsAmount",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "coachSitsPrice",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "comforSitstPrice",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "businessSitsPrice",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "firstSitsPrice",
-          "in" : "formData",
-          "required" : false,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "405" : {
-            "description" : "Invalid input"
-          }
-        }
-      },
-      "delete" : {
-        "tags" : [ "admin" ],
-        "summary" : "Deletes a transport",
-        "operationId" : "deleteTransport",
-        "produces" : [ "application/json" ],
-        "parameters" : [ {
-          "name" : "transportId",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
-        "responses" : {
-          "400" : {
-            "description" : "Invalid ID supplied"
           },
           "404" : {
             "description" : "Transport not found"
@@ -196,9 +78,19 @@
           "type" : "integer",
           "format" : "int64"
         }, {
+          "name" : "transportType",
+          "in" : "formData",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "aircraft", "bus", "train" ]
+          },
+          "collectionFormat" : "multi"
+        }, {
           "name" : "class",
           "in" : "formData",
-          "required" : true,
+          "required" : false,
           "type" : "array",
           "items" : {
             "type" : "string",
@@ -225,12 +117,12 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Flight"
+                "$ref" : "#/definitions/Route"
               }
             }
           },
           "400" : {
-            "description" : "Invalid status value"
+            "description" : "Invalid operation"
           }
         }
       }
@@ -275,6 +167,9 @@
                 "$ref" : "#/definitions/Prices"
               }
             }
+          },
+          "400" : {
+            "description" : "Invalid input"
           }
         }
       }
@@ -315,6 +210,9 @@
             "schema" : {
               "$ref" : "#/definitions/Booking"
             }
+          },
+          "400" : {
+            "description" : "Invalid operation"
           }
         }
       }
@@ -344,13 +242,17 @@
     }
   },
   "definitions" : {
-    "Flight" : {
+    "Route" : {
       "type" : "object",
       "required" : [ "name" ],
       "properties" : {
         "transportId" : {
           "type" : "integer",
           "format" : "int64"
+        },
+        "transportType" : {
+          "type" : "string",
+          "enum" : [ "aircraft", "train", "bus" ]
         },
         "name" : {
           "type" : "string",
@@ -371,12 +273,12 @@
           "format" : "int64"
         },
         "departureTime" : {
-          "type" : "integer",
-          "format" : "int64"
+          "type" : "object",
+          "properties" : { }
         },
         "arriveTime" : {
-          "type" : "integer",
-          "format" : "int64"
+          "type" : "object",
+          "properties" : { }
         }
       }
     },
@@ -406,27 +308,19 @@
     "Prices" : {
       "type" : "object",
       "properties" : {
-        "transportId" : {
-          "type" : "integer",
-          "format" : "int64"
+        "transportType" : {
+          "type" : "string",
+          "enum" : [ "aircraft", "bus", "train" ]
         },
         "date" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "coachPrice" : {
+        "avgPrice" : {
           "type" : "number",
           "format" : "double"
         },
-        "comfortPrice" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "businessPrice" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "firstClassPrice" : {
+        "minPrice" : {
           "type" : "number",
           "format" : "double"
         }
