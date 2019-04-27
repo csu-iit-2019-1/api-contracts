@@ -88,26 +88,9 @@
           },
           "collectionFormat" : "multi"
         }, {
-          "name" : "class",
-          "in" : "formData",
-          "required" : false,
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "default" : "coach",
-            "enum" : [ "coach", "comfort", "business", "first" ]
-          },
-          "collectionFormat" : "multi"
-        }, {
-          "name" : "countOfAdults",
+          "name" : "countOfPersons",
           "in" : "formData",
           "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "countOfKids",
-          "in" : "formData",
-          "required" : false,
           "type" : "integer",
           "format" : "int64"
         } ],
@@ -192,15 +175,9 @@
           "required" : true,
           "type" : "integer"
         }, {
-          "name" : "countOfAdults",
+          "name" : "countOfPersons",
           "in" : "formData",
           "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "countOfKids",
-          "in" : "formData",
-          "required" : false,
           "type" : "integer",
           "format" : "int64"
         } ],
@@ -284,12 +261,8 @@
     },
     "Sit" : {
       "type" : "object",
-      "required" : [ "className", "price", "sitNumber" ],
+      "required" : [ "price", "sitNumber" ],
       "properties" : {
-        "className" : {
-          "type" : "string",
-          "enum" : [ "coach", "comfort", "business", "first" ]
-        },
         "sitNumber" : {
           "type" : "integer",
           "format" : "int64"
@@ -316,11 +289,7 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "avgPrice" : {
-          "type" : "number",
-          "format" : "double"
-        },
-        "minPrice" : {
+        "Price" : {
           "type" : "number",
           "format" : "double"
         }
@@ -328,7 +297,7 @@
     },
     "Booking" : {
       "type" : "object",
-      "required" : [ "countOfAdults", "personId", "transportId" ],
+      "required" : [ "personId", "transportId" ],
       "properties" : {
         "bookingId" : {
           "type" : "integer",
@@ -342,11 +311,7 @@
           "type" : "integer",
           "format" : "int64"
         },
-        "countOfAdults" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "countOfKids" : {
+        "countOfPersons" : {
           "type" : "integer",
           "format" : "int64"
         },
