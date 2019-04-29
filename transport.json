@@ -50,7 +50,7 @@
         "consumes" : [ "multipart/form-data" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "points",
+          "name" : "endPoints",
           "in" : "formData",
           "required" : true,
           "type" : "array",
@@ -66,13 +66,7 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "name" : "startDate",
-          "in" : "formData",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "endDate",
+          "name" : "departureDate",
           "in" : "formData",
           "required" : true,
           "type" : "integer",
@@ -90,7 +84,7 @@
         }, {
           "name" : "countOfPersons",
           "in" : "formData",
-          "required" : true,
+          "required" : false,
           "type" : "integer",
           "format" : "int64"
         } ],
@@ -118,26 +112,36 @@
         "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "departureDate",
-          "in" : "path",
+          "in" : "formData",
           "required" : true,
           "type" : "integer",
           "format" : "int64"
         }, {
+          "name" : "transportType",
+          "in" : "formData",
+          "required" : false,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "aircraft", "bus", "train" ]
+          },
+          "collectionFormat" : "multi"
+        }, {
           "name" : "startPoint",
-          "in" : "path",
+          "in" : "formData",
           "required" : true,
           "type" : "integer",
           "format" : "int64"
         }, {
           "name" : "endPoints",
-          "in" : "path",
+          "in" : "formData",
           "required" : true,
           "type" : "array",
           "items" : {
             "type" : "integer",
             "format" : "int64"
           },
-          "collectionFormat" : "csv"
+          "collectionFormat" : "multi"
         } ],
         "responses" : {
           "200" : {
@@ -248,12 +252,12 @@
           "format" : "int64"
         },
         "departureTime" : {
-          "type" : "object",
-          "properties" : { }
+          "type" : "integer",
+          "format" : "int64"
         },
         "arriveTime" : {
-          "type" : "object",
-          "properties" : { }
+          "type" : "integer",
+          "format" : "int64"
         },
         "price" : {
           "type" : "number",
