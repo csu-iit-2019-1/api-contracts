@@ -117,13 +117,7 @@
         "consumes" : [ "multipart/form-data" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "startDate",
-          "in" : "path",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "endDate",
+          "name" : "departureDate",
           "in" : "path",
           "required" : true,
           "type" : "integer",
@@ -135,11 +129,15 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "name" : "endPoint",
+          "name" : "endPoints",
           "in" : "path",
           "required" : true,
-          "type" : "integer",
-          "format" : "int64"
+          "type" : "array",
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "collectionFormat" : "csv"
         } ],
         "responses" : {
           "200" : {
@@ -147,7 +145,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/Prices"
+                "$ref" : "#/definitions/Route"
               }
             }
           },
@@ -256,12 +254,16 @@
         "arriveTime" : {
           "type" : "object",
           "properties" : { }
+        },
+        "price" : {
+          "type" : "number",
+          "format" : "double"
         }
       }
     },
     "Sit" : {
       "type" : "object",
-      "required" : [ "price", "sitNumber" ],
+      "required" : [ "sitNumber", "transportId" ],
       "properties" : {
         "sitNumber" : {
           "type" : "integer",
@@ -272,26 +274,9 @@
           "default" : "available",
           "enum" : [ "available", "not available" ]
         },
-        "price" : {
-          "type" : "number",
-          "format" : "double"
-        }
-      }
-    },
-    "Prices" : {
-      "type" : "object",
-      "properties" : {
-        "transportType" : {
-          "type" : "string",
-          "enum" : [ "aircraft", "bus", "train" ]
-        },
-        "date" : {
+        "transportId" : {
           "type" : "integer",
           "format" : "int64"
-        },
-        "Price" : {
-          "type" : "number",
-          "format" : "double"
         }
       }
     },
