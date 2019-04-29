@@ -17,8 +17,8 @@
   } ],
   "schemes" : [ "https", "http" ],
   "paths" : {
-    "/events/{cityId}/{start_date}/{end_date}" : {
-      "get" : {
+    "/events/getEvents" : {
+      "post" : {
         "tags" : [ "event" ],
         "summary" : "get events during periods",
         "operationId" : "getEventsbyPeriod",
@@ -51,6 +51,33 @@
           },
           "404" : {
             "description" : "Events not found"
+          }
+        }
+      }
+    },
+    "/events/{eventId}":{
+      "get" : {
+        "tags" : [ "event" ],
+        "summary" : "get event by id",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "eventId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer"
+        }],
+        "responses" : {
+          "200" : {
+            "description" : "successful",
+            "schema" : {
+              "$ref" : "#/definitions/Event"
+            }
+          },
+          "400" : {
+            "description" : "Invalid ID supplied"
+          },
+          "404" : {
+            "description" : "Event not found"
           }
         }
       }
@@ -122,7 +149,7 @@
   "definitions" : {
     "Event" : {
       "type" : "object",
-      "required" : [ "city", "end_date", "name", "start_date" ],
+      "required" : [ "city_id", "end_date", "name", "start_date" ],
       "properties" : {
         "eventId" : {
           "type" : "integer",
@@ -132,8 +159,8 @@
           "type" : "string",
           "example" : "eventname"
         },
-        "city" : {
-          "type" : "string"
+        "city_id" : {
+          "type" : "integer"
         },
         "price" : {
           "type" : "number",
@@ -175,8 +202,8 @@
           "format" : "int64"
         },
         "status" : {
-          "type" : "string",
-          "example" : "Buying"
+          "type" : "boolean",
+          "example" : True
         }
       }
     },
@@ -205,8 +232,8 @@
           "format" : "int64"
         },
         "status" : {
-          "type" : "string",
-          "example" : "Booked!"
+          "type" : "boolean",
+          "example" : True
         }
       }
     }
