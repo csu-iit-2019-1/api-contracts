@@ -1,0 +1,336 @@
+﻿{
+  "swagger": "2.0",
+  "info": {
+    "description": "Routes Builder API",
+    "version": "1.0.0",
+    "title": "Routes Builder",
+    "termsOfService": "http://swagger.io/terms/",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags": [
+    {
+      "name": "route",
+      "description": "Building routes"
+    }
+  ],
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "paths": {
+    "/build_route": {
+      "post": {
+        "tags": [
+          "route"
+        ],
+        "summary": "Build a route",
+        "operationId": "buildRoute",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "RouteRequirements",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "StartDate",
+                "EndDate",
+                "PersonAmount",
+                "DepartureCityId",
+                "TransportTypes",
+                "MinHotelStart",
+                "CitiesRequirements"
+              ],
+              "properties": {
+                "StartDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "EndDate": {
+                  "type": "string",
+                  "format": "date-time"
+                },
+                "PersonAmount": {
+                  "type": "integer"
+                },
+                "DepartureCityId": {
+                  "type": "integer",
+                  "format": "int64"
+                },
+                "TransportTypes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "MinHotelStart": {
+                  "type": "integer"
+                },
+                "CitiesRequirements": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/CityRequirements"
+                  }
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "return route object",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Route"
+              }
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Route": {
+      "type": "object",
+      "required": [
+        "Points",
+        "ReverseTransport",
+        "TotalPrice"
+      ],
+      "properties": {
+        "Points": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/RoutePoints"
+          }
+        },
+        "ReverseTranpost": {
+          "$ref": "#/definitions/Transport"
+        },
+        "TotalPrice": {
+          "type": "number",
+          "format": "float64"
+        }
+      }
+    },
+    "RoutePoint": {
+      "type": "object",
+      "required": [
+        "CityId",
+        "Hotel",
+        "Transport",
+        "Events"
+      ],
+      "properties": {
+        "CityId": {
+          "type": "integer"
+        },
+        "Hotel": {
+          "$ref": "#/definitions/Hotel"
+        },
+        "Transport": {
+          "$ref": "#/definitions/Transport"
+        },
+        "Events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Event"
+          }
+        }
+      }
+    },
+    "CityRequirements": {
+      "type": "object",
+      "required": [
+        "CityId",
+        "TotalDaysIn",
+        "DatesIn[]",
+        "EventsIds",
+        "HotelBreakfast",
+        "HotelSeaNearby"
+      ],
+      "properties": {
+        "CityId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "TotalDaysIn": {
+          "type": "integer",
+          "format": "int"
+        },
+        "DatesIn": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "EventIds": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "HotelBreakfast": {
+          "type": "string",
+          "format": "bool"
+        },
+        "HotelSeaNearby": {
+          "type": "string",
+          "format": "bool"
+        }
+      }
+    },
+    "Hotel": null,
+    "type": "object",
+    "required": [
+      "Id",
+      "CityId",
+      "Name",
+      "MainPhotoUrl",
+      "Price",
+      "SeaIsNear",
+      "Breakfast",
+      "Stars"
+    ],
+    "properties": {
+      "Id": {
+        "type": "integer",
+        "format": "int"
+      },
+      "Name": {
+        "type": "string"
+      },
+      "CityId": {
+        "type": "integer"
+      },
+      "MainPhotoUrl": {
+        "type": "string"
+      },
+      "Price": {
+        "type": "number",
+        "format": "float64"
+      },
+      "SeaIsNearby": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "Breakfast": {
+        "type": "string",
+        "format": "bool"
+      },
+      "Stars": {
+        "type": "number",
+        "format": "float64"
+      }
+    },
+    "Event": {
+      "type": "object",
+      "required": [
+        "EventId",
+        "City",
+        "Name",
+        "Price",
+        "Description",
+        "StartDate",
+        "EndDate",
+        "FreeSpace"
+      ],
+      "properties": {
+        "EventId": {
+          "type": "integer",
+          "format": "int"
+        },
+        "City": {
+          "type": "integer"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "Price": {
+          "type": "number",
+          "format": "float64"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "StartDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "EndDate": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "FreeSpace": {
+          "type": "integer"
+        }
+      }
+    },
+    "Transport": {
+      "type": "object",
+      "required": [
+        "TransportId",
+        "TransportType",
+        "Name",
+        "StartPoint",
+        "EndPoint",
+        "DepartureTime",
+        "ArriveTime",
+        "Price"
+      ],
+      "properties": {
+        "TrasportId": {
+          "type": "integer"
+        },
+        "TransportType": {
+          "type": "string",
+          "format": "enum[ \"aircraft\", \"train\", \"bus\" ]"
+        },
+        "Name": {
+          "type": "string"
+        },
+        "StartPoint": {
+          "type": "integer"
+        },
+        "EndPoint": {
+          "type": "integer"
+        },
+        "DepartureTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ArriveTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "Price": {
+          "type": "number",
+          "format": "float64"
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "host": "virtserver.swaggerhub.com",
+  "basePath": "/rzemcog/RoutesBuilder/1.0.0"
+}
