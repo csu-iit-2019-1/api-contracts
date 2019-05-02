@@ -82,7 +82,7 @@
         }
       }
     },
-    "/events/booking/{eventId}" : {
+    "/events/booking" : {
       "post" : {
         "tags" : [ "booking" ],
         "summary" : "booking event",
@@ -139,7 +139,7 @@
           "200" : {
             "description" : "successful",
             "schema" : {
-              "$ref" : "#/definitions/Byuing"
+              "type":"boolean"
             }
           }
         }
