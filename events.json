@@ -189,24 +189,7 @@
         "$ref" : "#/definitions/Event"
       }
     },
-    "Byuing" : {
-      "type" : "object",
-      "required" : [ "bookingId", "status" ],
-      "properties" : {
-        "byuingId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "bookingId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "status" : {
-          "type" : "boolean",
-          "example" : True
-        }
-      }
-    },
+   
     "Booking" : {
       "type" : "object",
       "required" : [ "countOfPersonsAdults", "countOfPersonsChildren", "eventId" ],
@@ -214,26 +197,6 @@
         "bookingId" : {
           "type" : "integer",
           "format" : "int64"
-        },
-        "userId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "eventId" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "countOfPersonsAdults" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "countOfPersonsChildren" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "status" : {
-          "type" : "boolean",
-          "example" : True
         }
       }
     }
